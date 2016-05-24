@@ -5,6 +5,8 @@ title: "XCity Lin 林轩城"
 paginate: 10 #articles per page
 paginate_path: /blog/page:num #makes pagination working
 
+baseurl: "http://sjtulxc.github.io/xcity_blog/"
+
 #contacts
 # git: "https://github.com/railsr"  #your github url here.
 # stackoverflow: "http://stackoverflow.com/users/1231365/railsr" #Add your stackoverflow url here.
