@@ -1,11 +1,11 @@
 baseurl: "" # The subpath of your site. Use "" if you're hosting a blog at the root level.
-url: "XCity Lin" # the base hostname & protocol for your site.
-title: "XCity Lin 林轩城"
+url: "Swain Lin" # the base hostname & protocol for your site.
+title: "Swain Lin 林轩城"
 
 paginate: 10 #articles per page
 paginate_path: /blog/page:num #makes pagination working
 
-baseurl: "http://www.xcity.site/"
+baseurl: "http://www.swain.site/"
 
 #contacts
 # git: "https://github.com/railsr"  #your github url here.
