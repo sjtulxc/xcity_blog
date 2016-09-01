@@ -31,10 +31,12 @@ h1, h2, h3 {
 
 h1 {
   font-size: 28px;
+  margin: 30px;
 }
 
 h2 {
   font-size: 24px;
+  margin: 20px;
 }
 
 h4, h5, h6 {
@@ -46,7 +48,7 @@ h3 {
   line-height: 24px;
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
-  color: #b6b6b6;
+  color: #92d12d;
 }
 
 a {

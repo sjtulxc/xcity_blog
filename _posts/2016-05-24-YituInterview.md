@@ -27,7 +27,7 @@ tags: [面试,算法]
 输入：
 
 {% highlight c++ %}
-vector<string> board,int m,int n
+vector<string> board,int m,int n;
 //分别表示棋盘，棋盘长，棋盘宽，其中'o'表示白棋，'x'表示黑棋，'.'表示没有棋
 {% endhighlight %}
 
