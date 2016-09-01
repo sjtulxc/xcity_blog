@@ -60,6 +60,7 @@ ANR（Application Not Responding）是Android中AMS与WMS监测应用响应超�
 - 避免ANR，不要在UI线程中做耗时操作，遵守ANR规避守则，譬如多次数据库操作等。
 
 ## 内存性能优化
+
 ### Android系统级内存管理
 - Android系统级内存管理机制类似于Java的垃圾回收机制，在Android系统中框架会定义如下几类进程，在系统内存达到规定的阈值时会触发清空不同level的进程类型：
     - 前台进程
@@ -78,7 +79,7 @@ ANR（Application Not Responding）是Android中AMS与WMS监测应用响应超�
 举个例子：让一个单例模式的对象持有了当前Activity的强引用，那在当前Acvitivy执行完onDestroy()后，这个Activity就无法得到垃圾回收，也就造成了内存泄露。
 
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);  
         //DbManager是一个单例模式类，这样就持有了MainActivity引用，导致泄露
         mDbManager = DbManager.getInstance(this);    

@@ -9,30 +9,30 @@ tags: [JAVA,并发]
 线程池复用线程，在java中，我们主要使用的线程池就是`ThreadPoolExecutor`，此外还有定时的线程池`ScheduledThradPoolExecutor`。需要注意的是对于`Executors.newCachedThreadPool()`方法返回的线程池的使用，该方法返回的线程池是没有线程上限的，在使用时一定要当心，因为没有办法控制总体的线程数量，而每个线程都是消耗内存的，这可能会导致过多的内存被占用，建议尽量不要用这个方法返回线程池 ，而要使用有固定线程上限的线程池。
 
     public class WorkerPool {
-     
-    		public static void main(String args[]) throws InterruptedException{
-    		//RejectedExecutionHandler implementation
-    		RejectedExecutionHandlerImpl rejectionHandler = new RejectedExecutionHandlerImpl();
-    		//Get the ThreadFactory implementation to use
-    		ThreadFactory threadFactory = Executors.defaultThreadFactory();
-    		//creating the ThreadPoolExecutor
-    		ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2), threadFactory, rejectionHandler);
-    		//start the monitoring thread
-    		MyMonitorThread monitor = new MyMonitorThread(executorPool, 3);
-    		Thread monitorThread = new Thread(monitor);
-	    	monitorThread.start();
-    		//submit work to the thread pool
-	    	for(int i=0; i<10; i++){
-    			executorPool.execute(new WorkerThread("cmd"+i));
-    		}
-     
-    		Thread.sleep(30000);
-    		//shut down the pool
-    		executorPool.shutdown();
-    		//shut down the monitor thread
-    		Thread.sleep(5000);
-    		monitor.shutdown();
-     
+
+      public static void main(String args[]) throws InterruptedException{
+        //RejectedExecutionHandler implementation
+        RejectedExecutionHandlerImpl rejectionHandler = new RejectedExecutionHandlerImpl();
+        //Get the ThreadFactory implementation to use
+        ThreadFactory threadFactory = Executors.defaultThreadFactory();
+        //creating the ThreadPoolExecutor
+        ThreadPoolExecutor executorPool = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2), threadFactory, rejectionHandler);
+        //start the monitoring thread
+        MyMonitorThread monitor = new MyMonitorThread(executorPool, 3);
+        Thread monitorThread = new Thread(monitor);
+        monitorThread.start();
+        //submit work to the thread pool
+        for(int i=0; i<10; i++){
+          executorPool.execute(new WorkerThread("cmd"+i));
+        }
+
+        Thread.sleep(30000);
+        //shut down the pool
+        executorPool.shutdown();
+        //shut down the monitor thread
+        Thread.sleep(5000);
+        monitor.shutdown();
+
     	}
     }
 
@@ -49,14 +49,14 @@ tags: [JAVA,并发]
 
 `ReentrackLock`提供了`tryLock`方法，`tryLock`调用的时候，如果锁被其他线程持有，那么`tryLock`会立即返回，返回的结果为false，如果没有被其他线程持有，那么当前调用的线程会持有锁，并且`tryLock`返回的结果是true
 构造`RenntrantLock`对象的时候，有一个构造函数可以接受一个boolean类型的参数，那就是描述锁公平与否的函数，公平锁的好处是等待锁的线程不会饿死，但是整体效率相对低一些；非公平锁的好处是整体效率相对高一些，但是有些线程可能会饿死或者说很早就在等待锁，但要等很久才会得到锁，其中的原因是公平锁是严格按照请求锁的顺序来排队获取锁的，而非公平锁是可以抢占的，即如果在某个时刻有线程需要获取锁，而这个时候刚好锁可用，那么这个线程就会直接抢占，而这时阻塞在等待队列的线程则不会被唤醒
- 
+
     lock.lock();
      try{
         //don something
     	}finally{
     	lock.unlock();
      }
-    
+
 ### volatile
 
 `volatitle`是轻量级的实现变量可见性的方法，在变量前面增加`volatile`关键字就可以了，因为`volatile`只是保证了同一个变量在多线程中的可见性，所以它更多是用于修饰为开关状态的变量
@@ -94,7 +94,7 @@ tags: [JAVA,并发]
     	}
 	}
 
-对上面的例子采用`AtomicInteger`后，代码会变成这样 
+对上面的例子采用`AtomicInteger`后，代码会变成这样
 
 	public class Counter2{
     	private AtomicInteger counter=new AtomicInteger();
@@ -144,4 +144,3 @@ tags: [JAVA,并发]
 ### 并发容器
 
 并发容器的思路是尽量不用锁，比较有代表性的是以`CopyOnWrite`和`Concurrent`开头的几个容器，`CopyOnWrite`的思路是在更改容器的时候把容器写一份进行修改，保证正在读的线程不受影响，这种方式用在读多写少得场景中会更好，因为实质上是在写的时候重建了一次容器，而以`Concurrent`开头的容器的具体方式则不完全相同，总体来说是尽量保证读不加锁，并且修改时不影响读，所以会达到比使用读写锁更高的并发性能
-
