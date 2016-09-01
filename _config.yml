@@ -5,7 +5,7 @@ title: "Swain Lin 林轩城"
 paginate: 10 #articles per page
 paginate_path: /blog/page:num #makes pagination working
 
-baseurl: "http://www.swain.site/"
+baseurl: "http://www.swain.site"
 
 #contacts
 # git: "https://github.com/railsr"  #your github url here.
