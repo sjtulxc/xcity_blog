@@ -78,13 +78,14 @@ ANR（Application Not Responding）是Android中AMS与WMS监测应用响应超�
 
 举个例子：让一个单例模式的对象持有了当前Activity的强引用，那在当前Acvitivy执行完onDestroy()后，这个Activity就无法得到垃圾回收，也就造成了内存泄露。
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);  
-        //DbManager是一个单例模式类，这样就持有了MainActivity引用，导致泄露
-        mDbManager = DbManager.getInstance(this);    
-    }   
-
+{% highlight java %}
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_main);  
+  //DbManager是一个单例模式类，这样就持有了MainActivity引用，导致泄露
+  mDbManager = DbManager.getInstance(this);
+}   
+{% endhighlight %}
 
 - 内存泄漏导致问题
     - 应用卡顿，响应速度慢（内存占用高时JVM虚拟机会频繁触发GC）;

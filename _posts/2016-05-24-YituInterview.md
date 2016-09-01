@@ -26,8 +26,10 @@ tags: [面试,算法]
 
 输入：
 
-    vector<string> board,int m,int n
-	//分别表示棋盘，棋盘长，棋盘宽，其中'o'表示白棋，'x'表示黑棋，'.'表示没有棋
+{% highlight c++ %}
+vector<string> board,int m,int n
+//分别表示棋盘，棋盘长，棋盘宽，其中'o'表示白棋，'x'表示黑棋，'.'表示没有棋
+{% endhighlight %}
 
 输出：
 
@@ -39,99 +41,98 @@ tags: [面试,算法]
 
 ## 二面
 
-### 斐波那契数列第n项的O(logn)求法（写出完整代码） 
- 
+### 斐波那契数列第n项的O(logn)求法（写出完整代码）
+
 斐波那契数列第n项可用矩阵幂运算求解：
 
 ![](http://i.imgur.com/oqMjotV.png)  
 
 矩阵的n次方可在O(logn)时间内完成.
 
-具体代码如下(摘自网络): 
+具体代码如下(摘自网络):
+
+{% highlight c++ %}
+#include<iostream>  
+#include<string>  
+using namespace std;  
+
+//定义2×2矩阵；  
+struct Matrix2by2  
+{  
+  //构造函数  
+	Matrix2by2  
+  (  
+    long m_00,  
+    long m_01,  
+    long m_10,  
+    long m_11  
+  )  
+  :m00(m_00),m01(m_01),m10(m_10),m11(m_11)
+  {
+  }
+
+  //数据成员
+  long m00;
+  long m01;
+  long m10;
+  long m11;
+};
+
+//定义2×2矩阵的乘法运算
+Matrix2by2 MatrixMultiply(const Matrix2by2& matrix1,const Matrix2by2& matrix2)
+{
+  Matrix2by2 matrix12(1,1,1,0);
+  matrix12.m00 = matrix1.m00 * matrix2.m00 + matrix1.m01 * matrix2.m10;
+  matrix12.m01 = matrix1.m00 * matrix2.m01 + matrix1.m01 * matrix2.m11;
+  matrix12.m10 = matrix1.m10 * matrix2.m00 + matrix1.m11 * matrix2.m10;
+  matrix12.m11 = matrix1.m10 * matrix2.m01 + matrix1.m11 * matrix2.m11;
+  return matrix12;
+}
 
 
-	#include<iostream>  
-	#include<string>  
-	using namespace std;  
-	  
-	//定义2×2矩阵；  
-	struct Matrix2by2  
-	{  
-	    //构造函数  
-		Matrix2by2  
-	    (  
-	        long m_00,  
-	        long m_01,  
-	        long m_10,  
-	        long m_11  
-	    )  
-	    :m00(m_00),m01(m_01),m10(m_10),m11(m_11)
-	    {
-	    }
-	
-	    //数据成员
-	    long m00;
-	    long m01;
-	    long m10;
-	    long m11;
-	};
-	
-	//定义2×2矩阵的乘法运算
-	Matrix2by2 MatrixMultiply(const Matrix2by2& matrix1,const Matrix2by2& matrix2)
-	{
-	    Matrix2by2 matrix12(1,1,1,0);
-	    matrix12.m00 = matrix1.m00 * matrix2.m00 + matrix1.m01 * matrix2.m10;
-	    matrix12.m01 = matrix1.m00 * matrix2.m01 + matrix1.m01 * matrix2.m11;
-	    matrix12.m10 = matrix1.m10 * matrix2.m00 + matrix1.m11 * matrix2.m10;
-	    matrix12.m11 = matrix1.m10 * matrix2.m01 + matrix1.m11 * matrix2.m11;
-	    return matrix12;
-	
-	}
-	
-	
-	//定义2×2矩阵的幂运算
-	Matrix2by2 MatrixPower(unsigned int n)
-	{
-	    Matrix2by2 matrix(1,1,1,0);
-	    if(n == 1)
-	    {
-	        matrix = Matrix2by2(1,1,1,0);
-	    }
-	    else if(n % 2 == 0)
-	    {
-	        matrix = MatrixPower(n / 2);
-	        matrix = MatrixMultiply(matrix, matrix);
-	    }
-	    else if(n % 2 == 1)
-	    {
-	        matrix = MatrixPower((n-1) / 2);
-	        matrix = MatrixMultiply(matrix, matrix);
-	        matrix = MatrixMultiply(matrix, Matrix2by2(1,1,1,0));
-	    }
-	    return matrix;
-	}
-	//计算Fibnacci的第n项
-	long Fibonacci(unsigned int n)
-	{
-	    if(n == 0)
-	        return 0;
-	    if(n == 1)
-	        return 1;
-	
-	    Matrix2by2 fibMatrix = MatrixPower(n-1);
-	    return fibMatrix.m00;
-	    
-	}
-	
-	int main()
-	{
-	    cout<<"Enter A Number:"<<endl;
-	    unsigned int number;
-	    cin>>number;
-	    cout<<Fibonacci(number)<<endl;
-	    return 0;
-	}
+//定义2×2矩阵的幂运算
+Matrix2by2 MatrixPower(unsigned int n)
+{
+  Matrix2by2 matrix(1,1,1,0);
+  if(n == 1)
+  {
+    matrix = Matrix2by2(1,1,1,0);
+  }
+  else if(n % 2 == 0)
+  {
+    matrix = MatrixPower(n / 2);
+    matrix = MatrixMultiply(matrix, matrix);
+  }
+  else if(n % 2 == 1)
+  {
+    matrix = MatrixPower((n-1) / 2);
+    matrix = MatrixMultiply(matrix, matrix);
+    matrix = MatrixMultiply(matrix, Matrix2by2(1,1,1,0));
+  }
+  return matrix;
+}
 
+//计算Fibnacci的第n项
+long Fibonacci(unsigned int n)
+{
+  if(n == 0)
+    return 0;
+  if(n == 1)
+	  return 1;
+
+	Matrix2by2 fibMatrix = MatrixPower(n-1);
+	return fibMatrix.m00;
+}
+
+int main()
+{
+  cout<<"Enter A Number:"<<endl;
+  unsigned int number;
+  cin>>number;
+  cout<<Fibonacci(number)<<endl;
+  return 0;
+}
+{% endhighlight %}
 
 ### 数组循环移位  
 
