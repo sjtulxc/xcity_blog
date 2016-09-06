@@ -20,13 +20,13 @@ int[] nums
 
 {% highlight c++ %}
 int majorityElement(vector<int>& nums){
- 	int count=0,major=0;
-	for(int num: nums){
-		if(count == 0) major = num;
-		if(major == num) count++;
-		else count--;
-	}
-	return major;
+    int count=0,major=0;
+    for(int num: nums){
+        if(count == 0) major = num;
+        if(major == num) count++;
+        else count--;
+    }
+    return major;
 }
 {% endhighlight %}
 
@@ -52,33 +52,33 @@ int majorityElement(vector<int>& nums){
 
 {% highlight c++ %}
 vector<int> majorityElement(vector<int>& nums) {
-	int count1 = 0, count2 = 0, major1 = 0, major2 = 0;
-	for(int num : nums){
-		if(major1 == num) count1++;
-		else if(major2 == num) count2++;
-		else if(!count1) {
-			major1 = num;
-			count1++;
-		}
-		else if(!count2) {
-			major2 = num;
-			count2++;
-		}
-		else {
-			count1--;
-			count2--;
-		}	
-	}    
-	int size = nums.size();
-	count1 = 0;
-	count2 = 0;
-	for(int num: nums){
-		count1+=(num==major1?1:0);
-		count2+=(num==major2?1:0);
-	}
-	vector<int> res;
-	if(count1 > size/3) res.push_back(major1);
-	if(major1 != major2 && count2 > size/3) res.push_back(major2);
-	return res;
+    int count1 = 0, count2 = 0, major1 = 0, major2 = 0;
+    for(int num : nums){
+        if(major1 == num) count1++;
+        else if(major2 == num) count2++;
+        else if(!count1) {
+            major1 = num;
+            count1++;
+        }
+        else if(!count2) {
+            major2 = num;
+            count2++;
+        }
+        else {
+            count1--;
+            count2--;
+        }	
+    }    
+    int size = nums.size();
+    count1 = 0;
+    count2 = 0;
+    for(int num: nums){
+        count1+=(num==major1?1:0);
+        count2+=(num==major2?1:0);
+    }
+    vector<int> res;
+    if(count1 > size/3) res.push_back(major1);
+    if(major1 != major2 && count2 > size/3) res.push_back(major2);
+    return res;
 }
 {% endhighlight %}
