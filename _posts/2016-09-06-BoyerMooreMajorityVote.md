@@ -3,6 +3,7 @@ title: "Boyer-Moore Majority Vote"
 tags: [算法]
 ---
 
+Leetcode 229
 
 ### 问题描述
 
